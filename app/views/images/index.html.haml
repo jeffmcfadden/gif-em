@@ -1,0 +1,30 @@
+.row
+  .col-md-4.col-md-offset-4
+    = form_tag '/', method: :get do
+      = text_field_tag 'q', params[:q], class: "form-control"
+
+.row
+  .col-lg-3
+    = simple_form_for Image.new do |f|
+      = f.anaconda :asset, auto_upload: true, auto_submit: true
+      = f.input :name
+      = f.input :tag_list
+      = f.submit
+
+    %ul
+      - ActsAsTaggableOn::Tag.order( :name ).each do |tag|
+        %li
+          = link_to tag.name, "/?q=#{tag}"
+
+  .col-lg-9
+    .images-grid
+      - @images.each do |image|
+        %a{ href: image_path( image ) }
+          %img.img.img-responsive{ src: image.asset_url }
+
+      :javascript
+        $( document ).ready( function(){
+          $( '.images-grid img' ).each( function( el ){
+            $( el ).css( '-webkit-animation-play-state', 'paused' );
+          });
+        })

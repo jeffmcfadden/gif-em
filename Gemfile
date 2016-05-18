@@ -43,3 +43,16 @@ group :development, :test do
   gem 'spring'
 end
 
+gem 'anaconda'
+
+gem 'figaro'
+
+gem 'acts-as-taggable-on', '~> 3.4'
+
+gem 'haml'
+
+# Bootstrap
+gem 'bootstrap-sass', '~> 3.3'
+
+gem "kaminari"
+gem 'bootstrap-kaminari-views'

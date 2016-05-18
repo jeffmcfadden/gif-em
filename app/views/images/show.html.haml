@@ -1,0 +1,44 @@
+.row
+  .col-md-1
+    = link_to "Previous", images_path(@image.id - 1), { id: "prev_image" }
+  .col-md-10
+    = @image.name
+  .col-md-1
+    = link_to "Next", image_path( @image.id + 1 ), { id: "next_image" }
+
+
+.row
+  .col-md-3
+    = simple_form_for @image do |f|
+      = f.anaconda :asset
+      = f.input :name
+      = f.input :tag_list
+      = f.submit
+
+  .col-md-9
+
+    %p
+      = @image.tag_list
+
+    %img{ src: @image.asset_url }
+
+    :javascript
+      $( document ).ready( function(){
+
+        $(document).bind('keyup', 'ctrl+t', function(){
+          $( "#image_tag_list" ).focus();
+        });
+
+
+        // e.g. replace '$' sign with 'EUR'
+        $(document).bind('keyup', 'ctrl+n', function(){
+          window.location.href = "/images/#{@image.id + 1}";
+        });
+
+        // e.g. replace '$' sign with 'EUR'
+        $(document).bind('keyup', 'ctrl+p', function(){
+          window.location.href = "/images/#{@image.id - 1}";
+        });
+
+
+      });

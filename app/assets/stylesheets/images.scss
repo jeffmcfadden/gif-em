@@ -1,0 +1,13 @@
+// Place all the styles related to the images controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+.images-grid {
+  img {
+    width: 150px;
+    float: left;
+    padding: 5px;
+    -webkit-animation-play-state: paused; /* Chrome, Safari, Opera */
+    animation-play-state: paused;
+  }
+}
