@@ -5,10 +5,10 @@ class ImagesController < ApplicationController
     if params[:q].present?
       @images = Image.tagged_with( params[:q] )
     else
-      @images = Image.all.limit( 15 )
+      @images = Image.all
     end
 
-    @images = @images.order( created_at: :desc )
+    @images = @images.order( created_at: :desc ).page( params[:page] ).per( 24 )
 
   end
 

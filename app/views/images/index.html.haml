@@ -1,9 +1,4 @@
 .row
-  .col-md-4.col-md-offset-4
-    = form_tag '/', method: :get do
-      = text_field_tag 'q', params[:q], class: "form-control"
-
-.row
   .col-lg-3
     = simple_form_for Image.new do |f|
       = f.anaconda :asset, auto_upload: true, auto_submit: true
@@ -18,9 +13,12 @@
 
   .col-lg-9
     .images-grid
-      - @images.each do |image|
-        %a{ href: image_path( image ) }
-          %img.img.img-responsive{ src: image.asset_url }
+      - @images.each_slice(4) do |images|
+        .row
+          - images.each do |image|
+            .col-md-3.well
+              %a{ href: image_path( image ) }
+                %img.img.img-responsive.center-block{ src: image.asset_url }
 
       :javascript
         $( document ).ready( function(){
@@ -28,3 +26,6 @@
             $( el ).css( '-webkit-animation-play-state', 'paused' );
           });
         })
+
+    .text-center
+      = paginate @images

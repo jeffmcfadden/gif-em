@@ -4,8 +4,8 @@
 
 .images-grid {
   img {
-    width: 150px;
-    float: left;
+    max-width: 150px;
+    max-height: 300px;
     padding: 5px;
     -webkit-animation-play-state: paused; /* Chrome, Safari, Opera */
     animation-play-state: paused;
