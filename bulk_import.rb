@@ -1,7 +1,9 @@
-Dir.foreach('/Users/jeffmcfadden/Pictures/meme') do |item|
+BULK_IMPORT_DIRECTORY = '/full/path/to/your/images'
+
+Dir.foreach(BULK_IMPORT_DIRECTORY) do |item|
   next if item == '.' or item == '..' or item == '.DS_Store'
 
-  full_path = "/Users/jeffmcfadden/Pictures/meme/#{item}"
+  full_path = "#{BULK_IMPORT_DIRECTORY}/#{item}"
 
   uploaded_path = "bulk-uploaded/#{item}"
 
