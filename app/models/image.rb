@@ -1,6 +1,6 @@
 class Image < ActiveRecord::Base
   acts_as_taggable
-  anaconda_for :asset, base_key: :asset_key
+  anaconda_for :asset, base_key: :asset_key, host: ENV['IMAGE_HOSTNAME']
 
   def asset_key
     o = [('a'..'z'), ('A'..'Z')].map { |i| i.to_a }.flatten
