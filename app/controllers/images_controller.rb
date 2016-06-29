@@ -12,6 +12,12 @@ class ImagesController < ApplicationController
       @images = Image.all.order("RANDOM()").first(4)
     end
   end
+  
+  def tag_cloud
+    @tags = Image.tag_counts_on(:tags)
+    
+    
+  end
 
   def show
   end

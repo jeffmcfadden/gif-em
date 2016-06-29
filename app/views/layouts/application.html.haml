@@ -23,7 +23,9 @@
           - @untagged_image = Image.untagged.last
           - if @untagged_image.present?
             %li= link_to "Untagged Queue", image_path(@untagged_image, untagged: true)
-            
+          
+          %li= link_to "All Tags", tag_cloud_images_path
+          
         .navbar-form.navbar-right
           = simple_form_for Image.new, html: { class: 'form-horizontal' } do |f|
             .text-center

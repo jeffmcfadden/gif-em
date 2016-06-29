@@ -1,4 +1,6 @@
 module ImagesHelper
+  include ActsAsTaggableOn::TagsHelper
+  
   def tag_label(tag: tag, show_remove: false)
     content_tag(:span, class: "label #{label_class_for_tag(tag)}") do
       output = [content_tag(:span, tag.tag.name, title: "Confidence: #{tag.confidence}")]
