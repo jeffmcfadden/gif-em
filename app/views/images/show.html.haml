@@ -1,17 +1,4 @@
 .row
-  .col-md-1
-    - prev_image = Image.where("id < ?", @image.id).order(id: :desc).first
-    - if prev_image
-      = link_to "Previous", image_path(prev_image), { id: "prev_image" }
-  .col-md-10
-    = @image.name
-  .col-md-1
-    - next_image = Image.where("id > ?", @image.id).order(id: :asc).first
-    - if next_image
-      = link_to "Next", image_path( next_image ), { id: "next_image" }
-
-
-.row
   .col-md-3
     .well
       = simple_form_for @image, url: add_tag_image_path(@image), html: { class: 'form-inline' } do |f|
@@ -33,6 +20,17 @@
         %li= tag_label(tag: tag, show_remove: true)
 
   .col-md-9
+    .row
+      .col-md-2
+        - prev_image = Image.where("id < ?", @image.id).order(id: :desc).first
+        - if prev_image
+          = link_to "<i class='fa fa-arrow-left'></i>".html_safe, image_path(prev_image), { id: "prev_image" }
+      .col-md-8
+        = @image.name
+      .col-md-2.text-right
+        - next_image = Image.where("id > ?", @image.id).order(id: :asc).first
+        - if next_image
+          = link_to "<i class='fa fa-arrow-right'></i>".html_safe, image_path( next_image ), { id: "next_image" }
 
     %img.center-block{style: "max-width: 100%; max-height: 80%;", src: @image.asset_url }
 
