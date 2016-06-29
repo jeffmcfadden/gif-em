@@ -16,9 +16,10 @@
       - @images.each_slice(4) do |images|
         .row
           - images.each do |image|
-            .col-md-3.well
-              %a{ href: image_path( image ) }
-                %img.img.img-responsive.center-block{ src: image.asset_url }
+            .col-md-3
+              .well
+                %a{ href: image_path( image ) }
+                  %img.img.img-responsive.center-block{ src: image.asset_url }
 
       :javascript
         $( document ).ready( function(){
