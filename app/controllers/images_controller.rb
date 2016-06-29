@@ -6,6 +6,9 @@ class ImagesController < ApplicationController
       @images = Image.tagged_with(ActsAsTaggableOn::Tag.all.map(&:to_s), exclude: true)
     elsif params[:q].present?
       @images = Image.tagged_with( params[:q] )
+      if @images.size == 1
+        redirect_to @images.first and return
+      end
     else
       @images = Image.all
     end

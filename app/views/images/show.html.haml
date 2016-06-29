@@ -1,10 +1,14 @@
 .row
   .col-md-1
-    = link_to "Previous", images_path(@image.id - 1), { id: "prev_image" }
+    - prev_image = Image.where("id < ?", @image.id).order(id: :desc).first
+    - if prev_image
+      = link_to "Previous", image_path(prev_image), { id: "prev_image" }
   .col-md-10
     = @image.name
   .col-md-1
-    = link_to "Next", image_path( @image.id + 1 ), { id: "next_image" }
+    - next_image = Image.where("id > ?", @image.id).order(id: :asc).first
+    - if next_image
+      = link_to "Next", image_path( next_image ), { id: "next_image" }
 
 
 .row
