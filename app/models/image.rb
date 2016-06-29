@@ -6,10 +6,10 @@ class Image < ActiveRecord::Base
 
   scope :untagged, ->{ tagged_with(ActsAsTaggableOn::Tag.all.map(&:to_s), exclude: true) }
   
-  def self.set_all_imagga_tags!(min_tag_count: 10)
+  def self.set_all_imagga_tags!(max_tag_count: 10)
     # Ignore things that have tags over the threshold
     Image.find_each do |image|
-      next if image.tags.size > min_tag_count
+      next if image.tags.size > max_tag_count
       begin
         sleep(1)
         puts "Tagging: #{image.id}..."
