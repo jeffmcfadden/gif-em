@@ -41,7 +41,7 @@ class ImagesController < ApplicationController
   end
   
   def add_tag
-    @image.tag_list.add(params[:image][:tag])
+    @image.tag_list.add(params[:image][:tag].split(","))
     @image.save
     redirect_to @image
   end
