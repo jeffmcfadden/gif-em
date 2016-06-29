@@ -5,6 +5,22 @@ class Image < ActiveRecord::Base
   anaconda_for :asset, base_key: :asset_key, host: ENV['IMAGE_HOSTNAME']
 
   scope :untagged, ->{ tagged_with(ActsAsTaggableOn::Tag.all.map(&:to_s), exclude: true) }
+  
+  def self.set_all_imagga_tags!(min_tag_count: 10)
+    # Ignore things that have tags over the threshold
+    Image.find_each do |image|
+      next if image.tags.size > min_tag_count
+      begin
+        sleep(1)
+        puts "Tagging: #{image.id}..."
+        image.set_imagga_tags!
+        print "Success! Added #{image.tags.size} tags"
+      rescue => e
+        print "Failed: #{e.message}"
+        next
+      end
+    end
+  end
 
   def asset_key
     o = [('a'..'z'), ('A'..'Z')].map { |i| i.to_a }.flatten

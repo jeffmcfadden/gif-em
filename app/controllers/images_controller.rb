@@ -9,7 +9,7 @@ class ImagesController < ApplicationController
         redirect_to @images.first and return
       end
     else
-      @images = Image.all.order("RANDOM()").first(24)
+      @images = Image.all.order("RANDOM()").first(4)
     end
   end
 
