@@ -15,3 +15,13 @@
   padding: 2em 0;
   border: 2px dashed black;
 }
+.tags{
+  .label{
+    a{
+      color: #CCC;
+      &:hover{
+        color: #FFF;
+      }
+    }
+  }
+}

@@ -1,4 +1,6 @@
 class ImagesController < ApplicationController
+  
+  before_action :load_image, only: [:show, :update, :remove_tag]
 
   def index
     if params[:q].present?
@@ -12,12 +14,9 @@ class ImagesController < ApplicationController
   end
 
   def show
-    @image = Image.find(params[:id])
   end
 
   def update
-    @image = Image.find(params[:id])
-
     if @image.update_attributes( image_params )
       if params[:untagged] && @untagged_image = Image.untagged.last
         redirect_to image_path(@untagged_image, untagged: true)
@@ -40,6 +39,12 @@ class ImagesController < ApplicationController
       redirect_to images_path
     end
   end
+  
+  def remove_tag
+    @image.tag_list.remove(params[:tag])
+    @image.save
+    redirect_to @image
+  end
 
   private
 
@@ -49,6 +54,10 @@ class ImagesController < ApplicationController
             :tag_list,
             Image.anaconda_fields_for( :asset )
             )
+  end
+  
+  def load_image
+    @image = Image.find(params[:id])
   end
 
 end
