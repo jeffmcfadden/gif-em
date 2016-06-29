@@ -1,10 +1,7 @@
 class ImagesController < ApplicationController
 
   def index
-
-    if params[:untagged].present?
-      @images = Image.tagged_with(ActsAsTaggableOn::Tag.all.map(&:to_s), exclude: true)
-    elsif params[:q].present?
+    if params[:q].present?
       @images = Image.tagged_with( params[:q] )
       if @images.size == 1
         redirect_to @images.first and return
@@ -12,9 +9,7 @@ class ImagesController < ApplicationController
     else
       @images = Image.all
     end
-
     @images = @images.order( created_at: :desc ).page( params[:page] ).per( 24 )
-
   end
 
   def show
@@ -25,7 +20,11 @@ class ImagesController < ApplicationController
     @image = Image.find(params[:id])
 
     if @image.update_attributes( image_params )
-      redirect_to @image
+      if params[:untagged] && @untagged_image = Image.untagged.last
+        redirect_to image_path(@untagged_image, untagged: true)
+      else
+        redirect_to @image
+      end
     else
       flash[:notice] = "Image failed to save."
       redirect_to @image

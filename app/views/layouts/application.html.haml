@@ -20,7 +20,9 @@
       .container-fluid
         %ul.nav.navbar-nav
           %li= link_to "Home", root_path
-          %li= link_to "Untagged", images_path(untagged: true)
+          - @untagged_image = Image.untagged.last
+          - if @untagged_image.present?
+            %li= link_to "Untagged Queue", image_path(@untagged_image, untagged: true)
         .navbar-form.navbar-right
           = form_tag '/', method: :get, class: "form-inline" do
             .form-group
