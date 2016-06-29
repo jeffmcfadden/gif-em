@@ -4,7 +4,7 @@ class ImagesController < ApplicationController
 
   def index
     if params[:q].present?
-      @images = Image.tagged_with( params[:q] ).order( created_at: :desc ).page( params[:page] ).per( 24 )
+      @images = Image.tagged_with( params[:q], wild: true, any: true ).order( created_at: :desc ).page( params[:page] ).per( 24 )
       if @images.size == 1
         redirect_to @images.first and return
       end
