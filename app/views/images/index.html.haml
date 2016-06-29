@@ -28,6 +28,6 @@
             $( el ).css( '-webkit-animation-play-state', 'paused' );
           });
         })
-
-    .text-center
-      = paginate @images
+    - if @images.respond_to?(:total_count)
+      .text-center
+        = paginate @images
