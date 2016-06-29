@@ -14,22 +14,21 @@
 .row
   .col-md-3
     .well
-      = simple_form_for @image do |f|
-        = f.anaconda :asset
+      = simple_form_for @image, html: { class: 'form-horizontal' } do |f|
         = f.input :name
         = f.input :tag_list, input_html: {value: @image.tags.join(", ")}
-        = f.submit
+        = f.submit class: 'btn btn-primary'
 
   .col-md-9
 
     %p
       = @image.tag_list
 
-    %img{ src: @image.asset_url }
+    %img.center-block{ src: @image.asset_url }
 
     :javascript
       $( document ).ready( function(){
-
+        
         $(document).bind('keyup', 'ctrl+t', function(){
           $( "#image_tag_list" ).focus();
         });
