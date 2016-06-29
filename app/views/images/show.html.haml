@@ -61,6 +61,13 @@
     %p.tags
       - @image.tags.each do |tag|
         %span.label.label-default #{tag} #{link_to "<i class='fa fa-times'></i>".html_safe, remove_tag_image_path(tag: tag.to_s), method: :post}
+      
+    = link_to "Send To Imagga", imagga_image_path( @image ), method: :post
+
+  .col-md-9
+
+    %p
+      = @image.tag_list_by_confidence.join( ", " )
 
     %img.center-block{style: "max-width: 100%; max-height: 80%;", src: @image.asset_url }
 

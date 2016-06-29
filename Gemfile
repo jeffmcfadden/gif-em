@@ -44,6 +44,8 @@ group :development, :test do
   gem 'spring'
 end
 
+gem 'rest-client'
+
 gem 'anaconda'
 
 gem 'figaro'

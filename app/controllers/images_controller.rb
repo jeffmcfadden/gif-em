@@ -43,6 +43,11 @@ class ImagesController < ApplicationController
   def remove_tag
     @image.tag_list.remove(params[:tag])
     @image.save
+  end
+  
+  def imagga
+    @image = Image.find(params[:id])
+    @image.set_imagga_tags!
     redirect_to @image
   end
 
