@@ -16,19 +16,20 @@
     %link{:href => "//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css", :rel => "stylesheet"}/
   %body.body{ class: content_for?(:body_class) ? content_for(:body_class) : "" }
 
-    .container-fluid
-      .row
-        .col-md-12
-          = link_to "Home", root_path
-          = link_to "Untagged", images_path(untagged: true)
-
-    .container-fluid
-      .row
-        .col-md-4.col-md-offset-4
+    %nav.navbar.navbar-default
+      .container-fluid
+        %ul.nav.navbar-nav
+          %li= link_to "Home", root_path
+          %li= link_to "Untagged", images_path(untagged: true)
+        .navbar-form.navbar-right
           = form_tag '/', method: :get, class: "form-inline" do
             .form-group
               = text_field_tag 'q', params[:q], class: "form-control", placeholder: "Search"
               = submit_tag "Search", class: "btn btn-primary"
+
+    .container-fluid
+      .row
+        
       .row
         .col-lg-12.col-md-12
           = yield
