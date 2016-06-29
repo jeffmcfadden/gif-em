@@ -19,7 +19,7 @@
         = f.input :name
         = f.input :tag_list, input_html: {value: @image.tags.join(", ")}
         = f.submit class: 'btn btn-primary'
-        
+      
       :coffeescript
         availableTags = #{ActsAsTaggableOn::Tag.all.map(&:to_s).to_json}
         
@@ -55,6 +55,9 @@
             this.value = terms.join( ", " )
             return false;
         })
+    
+    = link_to "Send To Imagga", imagga_image_path( @image ), method: :post
+    
 
   .col-md-9
 
@@ -62,8 +65,6 @@
       - @image.tags.each do |tag|
         %span.label.label-default #{tag} #{link_to "<i class='fa fa-times'></i>".html_safe, remove_tag_image_path(tag: tag.to_s), method: :post}
       
-    = link_to "Send To Imagga", imagga_image_path( @image ), method: :post
-
   .col-md-9
 
     %p
