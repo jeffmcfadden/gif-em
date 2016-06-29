@@ -9,11 +9,12 @@
 
 .row
   .col-md-3
-    = simple_form_for @image do |f|
-      = f.anaconda :asset
-      = f.input :name
-      = f.input :tag_list
-      = f.submit
+    .well
+      = simple_form_for @image do |f|
+        = f.anaconda :asset
+        = f.input :name
+        = f.input :tag_list, input_html: {value: @image.tags.join(", ")}
+        = f.submit
 
   .col-md-9
 

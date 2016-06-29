@@ -1,10 +1,11 @@
 .row
   .col-lg-3
-    = simple_form_for Image.new do |f|
-      = f.anaconda :asset, auto_upload: true, auto_submit: true
-      = f.input :name
-      = f.input :tag_list
-      = f.submit
+    .well
+      = simple_form_for Image.new do |f|
+        = f.anaconda :asset, auto_upload: true, auto_submit: true
+        = f.input :name
+        = f.input :tag_list
+        = f.submit
 
     %ul
       - ActsAsTaggableOn::Tag.order( :name ).each do |tag|
