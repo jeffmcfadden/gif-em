@@ -1,4 +1,5 @@
 require 'base64'
+require 'open-uri'
 
 class Image < ActiveRecord::Base
   acts_as_taggable
@@ -20,6 +21,12 @@ class Image < ActiveRecord::Base
         next
       end
     end
+  end
+  
+  def self.import_from_url(url)
+    image = Image.create
+    image.import_file_to_anaconda_column(url, :asset)
+    return image
   end
 
   def asset_key

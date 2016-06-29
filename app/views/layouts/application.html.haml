@@ -32,6 +32,12 @@
               = f.anaconda :asset, auto_upload: true, auto_submit: true
 
         .navbar-form.navbar-right
+          = form_tag create_from_url_images_path, method: :post, class: "form-inline" do
+            .form-group
+              = text_field_tag 'image_url', nil, class: "form-control", placeholder: "http://"
+              = submit_tag "Add From URL", class: "btn btn-default"
+
+        .navbar-form.navbar-right
           = form_tag '/', method: :get, class: "form-inline" do
             .form-group
               = text_field_tag 'q', params[:q], class: "form-control", placeholder: "Search"

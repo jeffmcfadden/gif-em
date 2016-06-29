@@ -34,6 +34,11 @@ class ImagesController < ApplicationController
       redirect_to @image
     end
   end
+  
+  def create_from_url
+    @image = Image.import_from_url(params[:image_url].strip)
+    redirect_to image_path(@image)
+  end
 
   def create
     @image = Image.new( image_params )
