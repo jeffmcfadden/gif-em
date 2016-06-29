@@ -6,11 +6,6 @@
           Drop your image into the dropzone below
           = f.anaconda :asset, auto_upload: true, auto_submit: true
 
-    %ul
-      - ActsAsTaggableOn::Tag.order( :name ).each do |tag|
-        %li
-          = link_to tag.name, "/?q=#{tag}"
-
   .col-lg-9
     .images-grid
       - @images.each_slice(4) do |images|
@@ -20,11 +15,6 @@
               .well
                 %a{ href: image_path( image, untagged: params[:untagged] ) }
                   %img.img.img-responsive.center-block{ src: image.asset_url }
-                %p.tags
-                  - image.tags.each do |tag|
-                    = link_to root_url(q: tag.to_s) do
-                      %span.label.label-default #{tag}
-
       :javascript
         $( document ).ready( function(){
           $( '.images-grid img' ).each( function( el ){
