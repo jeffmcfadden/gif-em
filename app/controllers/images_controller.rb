@@ -1,6 +1,6 @@
 class ImagesController < ApplicationController
   
-  before_action :load_image, only: [:show, :update, :remove_tag]
+  before_action :load_image, only: [:show, :update, :add_tag, :remove_tag, :imagga]
 
   def index
     if params[:q].present?
@@ -40,13 +40,19 @@ class ImagesController < ApplicationController
     end
   end
   
+  def add_tag
+    @image.tag_list.add(params[:image][:tag])
+    @image.save
+    redirect_to @image
+  end
+
   def remove_tag
     @image.tag_list.remove(params[:tag])
     @image.save
+    redirect_to @image
   end
   
   def imagga
-    @image = Image.find(params[:id])
     @image.set_imagga_tags!
     redirect_to @image
   end

@@ -14,49 +14,19 @@
 .row
   .col-md-3
     .well
-      = simple_form_for @image, html: { class: 'form-horizontal' } do |f|
-        = hidden_field_tag :untagged, true if params[:untagged]
-        = f.input :name
-        = f.input :tag_list, input_html: {value: @image.tags.join(", ")}
-        = f.submit class: 'btn btn-primary'
+      = simple_form_for @image, url: add_tag_image_path(@image), html: { class: 'form-inline' } do |f|
+        = f.input :tag, input_html: {value: nil}, placeholder: "Tag", label: false
+        = f.submit "Add Tag", class: 'btn btn-primary'
       
       :coffeescript
         availableTags = #{ActsAsTaggableOn::Tag.all.map(&:to_s).to_json}
         
-        split = ( val ) =>
-          val.split( /,\s*/ );
-        
-        extractLast = ( term ) ->
-          split( term ).pop()
-        
-        $( "#image_tag_list").bind( "keydown", ( event ) ->
-          if ( event.keyCode == $.ui.keyCode.TAB && $( this ).autocomplete( "instance" ).menu.active )
-            event.preventDefault();
-        )
-        .autocomplete({
+        $( "#image_tag").autocomplete({
           minLength: 0,
-          source: ( request, response ) =>
-            # delegate back to autocomplete, but extract the last term
-            response( $.ui.autocomplete.filter(
-              availableTags, extractLast( request.term ) ) )
-          ,
-          focus: ->
-            # prevent value inserted on focus
-            return false;
-          ,
-          select: ( event, ui ) ->
-            terms = split( this.value )
-            # remove the current input
-            terms.pop();
-            # add the selected item
-            terms.push( ui.item.value )
-            # add placeholder to get the comma-and-space at the end
-            terms.push( "" )
-            this.value = terms.join( ", " )
-            return false;
+          source: availableTags
         })
-    
-    = link_to "Send To Imagga", imagga_image_path( @image ), method: :post
+      %hr
+      = link_to "Auto tag with Imagga", imagga_image_path( @image ), method: :post, class: 'btn btn-sm btn-default'
     
     %ul.tags
       - @image.tag_list_with_confidence.each do |tag|
