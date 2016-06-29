@@ -11,10 +11,10 @@
  * file per style scope.
  *
  */
-
 // "bootstrap-sprockets" must be imported before "bootstrap" and "bootstrap/variables"
+//= require jquery-ui/autocomplete
 @import "bootstrap-sprockets";
 @import "variables";
 @import "bootstrap";
-
+@import "jquery-ui";
 @import "images";
