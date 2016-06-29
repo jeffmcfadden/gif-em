@@ -2,7 +2,9 @@ class ImagesController < ApplicationController
 
   def index
 
-    if params[:q].present?
+    if params[:untagged].present?
+      @images = Image.tagged_with(ActsAsTaggableOn::Tag.all.map(&:to_s), exclude: true)
+    elsif params[:q].present?
       @images = Image.tagged_with( params[:q] )
     else
       @images = Image.all
