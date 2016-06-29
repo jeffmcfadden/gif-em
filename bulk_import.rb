@@ -1,13 +1,17 @@
 BULK_IMPORT_DIRECTORY = '/full/path/to/your/images'
 
-Dir.foreach(BULK_IMPORT_DIRECTORY) do |item|
+Dir[ File.join(BULK_IMPORT_DIRECTORY, '**', '*') ].reject { |p| File.directory? p }.each do |item|
   next if item == '.' or item == '..' or item == '.DS_Store'
+
+  item = item.gsub( "#{BULK_IMPORT_DIRECTORY}/", '' )
 
   full_path = "#{BULK_IMPORT_DIRECTORY}/#{item}"
 
-  uploaded_path = "bulk-uploaded/#{item}"
+  uploaded_path = "bulk-uploaded-2/#{item}"
 
   image = Image.new
+
+  image.name = "#{item}"
 
   image.asset_filename = item
   image.asset_file_path = uploaded_path
