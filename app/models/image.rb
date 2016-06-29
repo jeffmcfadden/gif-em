@@ -4,6 +4,7 @@ require 'open-uri'
 class Image < ActiveRecord::Base
   acts_as_taggable
   anaconda_for :asset, base_key: :asset_key, host: ENV['IMAGE_HOSTNAME']
+  attr_accessor :extension_for_upload
 
   scope :untagged, ->{ tagged_with(ActsAsTaggableOn::Tag.all.map(&:to_s), exclude: true) }
   
@@ -25,6 +26,7 @@ class Image < ActiveRecord::Base
   
   def self.import_from_url(url)
     image = Image.create
+    image.extension_for_upload = File.extname(url)
     image.import_file_to_anaconda_column(url, :asset)
     return image
   end
@@ -32,7 +34,7 @@ class Image < ActiveRecord::Base
   def asset_key
     o = [('a'..'z'), ('A'..'Z')].map { |i| i.to_a }.flatten
     s = (0...24).map { o[rand(o.length)] }.join
-    "assets/#{s}"
+    "assets/#{s}#{extension_for_upload}"
   end
   
   def get_imagga_tags
