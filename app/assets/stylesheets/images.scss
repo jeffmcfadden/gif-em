@@ -15,7 +15,10 @@
   padding: 2em 0;
   border: 2px dashed black;
 }
-.tags{
+ul.tags{
+  list-style-type: none;
+  margin-left: 0;
+  padding-left: 0;
   .label{
     a{
       color: #CCC;

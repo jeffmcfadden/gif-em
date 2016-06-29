@@ -30,8 +30,12 @@ class Image < ActiveRecord::Base
     end
   end
   
+  def tag_list_with_confidence
+  taggings.order( confidence: :desc, created_at: :desc )
+  end
+  
   def tag_list_by_confidence
-    taggings.order( confidence: :desc, created_at: :desc ).collect{ |t| t.tag.name }
+    tag_list_with_confidence.collect{ |t| t.tag.name }
   end
 
 
