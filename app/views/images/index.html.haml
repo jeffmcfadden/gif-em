@@ -2,10 +2,9 @@
   .col-lg-3
     .well
       = simple_form_for Image.new, html: { class: 'form-horizontal' } do |f|
-        = f.anaconda :asset, auto_upload: true, auto_submit: true
-        = f.input :name
-        = f.input :tag_list
-        = f.submit class: 'btn btn-primary'
+        .text-center
+          Drop your image into the dropzone below
+          = f.anaconda :asset, auto_upload: true, auto_submit: true
 
     %ul
       - ActsAsTaggableOn::Tag.order( :name ).each do |tag|

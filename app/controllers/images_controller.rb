@@ -34,7 +34,7 @@ class ImagesController < ApplicationController
     @image = Image.new( image_params )
 
     if @image.save
-      redirect_to images_path
+      redirect_to image_path(@image, untagged: true)
     else
       flash[:notice] = "Image failed to save."
       redirect_to images_path
