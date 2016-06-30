@@ -5,7 +5,9 @@ class ImagesController < ApplicationController
   def index
     if params[:q].present?
       
-      tag_ids = ActsAsTaggableOn::Tag.where( "name ILIKE ? ESCAPE '!'", "%#{params[:q]}%").collect{ |t| t.id }
+      where_clause = params[:q].split( "," ).collect{ |s| "name ILIKE '%#{s.strip}%' ESCAPE '!'"}.join( " OR " )
+      
+      tag_ids = ActsAsTaggableOn::Tag.where( where_clause ).collect{ |t| t.id }
       
       @taggings = ActsAsTaggableOn::Tagging.includes( :taggable ).where( tag_id: tag_ids ).order( "confidence DESC, taggings.created_at DESC" ).page( params[:page] ).per( 24 )
       
