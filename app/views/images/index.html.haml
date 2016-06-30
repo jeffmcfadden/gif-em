@@ -14,9 +14,9 @@
             $( el ).css( '-webkit-animation-play-state', 'paused' );
           });
         })
-    - if @images.respond_to?(:total_count)
+    - if @taggings.respond_to?(:total_count)
       .text-center
-        = paginate @images
+        = paginate @taggings
 :coffeescript
   $( document ).ready ->
     $("input#q").focus()
