@@ -4,6 +4,7 @@ Rails.application.routes.draw do
     collection do
       get :tag_cloud
       post :create_from_url
+      get :create_from_url
     end
     
     member do
