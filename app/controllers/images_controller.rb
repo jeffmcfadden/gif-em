@@ -1,6 +1,6 @@
 class ImagesController < ApplicationController
   
-  before_action :load_image, only: [:show, :update, :add_tag, :remove_tag, :imagga]
+  before_action :load_image, only: [:show, :update, :add_tag, :remove_tag, :imagga, :destroy]
 
   def index
     if params[:q].present?
@@ -11,7 +11,7 @@ class ImagesController < ApplicationController
       
       @taggings = ActsAsTaggableOn::Tagging.includes( :taggable ).where( tag_id: tag_ids ).order( "confidence DESC, taggings.created_at DESC" ).page( params[:page] ).per( 24 )
       
-      @images = @taggings.collect{ |t| t.taggable }
+      @images = @taggings.collect{ |t| t.taggable }.uniq
       
       if @images.size == 1
         redirect_to @images.first and return
@@ -57,6 +57,13 @@ class ImagesController < ApplicationController
       flash[:notice] = "Image failed to save."
       redirect_to images_path
     end
+  end
+  
+  def destroy
+    @image.destroy
+
+    flash[:notice] = "Destroyed."
+    redirect_to images_path
   end
   
   def add_tag
