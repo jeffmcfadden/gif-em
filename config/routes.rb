@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   resources :images do
     collection do
       get :tag_cloud
+      get :all
       post :create_from_url
       get :create_from_url
     end

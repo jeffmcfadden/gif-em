@@ -20,11 +20,13 @@ class ImagesController < ApplicationController
       @images = Image.all.order("RANDOM()").first(4)
     end
   end
+
+  def all
+    @images = Image.all.order( created_at: :desc ).page( params[:page] ).per( 24 )
+  end
   
   def tag_cloud
     @tags = Image.tag_counts_on(:tags)
-    
-    
   end
 
   def show

@@ -1,0 +1,19 @@
+.row
+  .col-lg-12
+    .images-grid
+      - @images.each_slice(4) do |images|
+        .row
+          - images.each do |image|
+            .col-md-3
+              .well
+                %a{ href: image_path( image, untagged: params[:untagged] ) }
+                  %img.img.img-responsive.center-block{ src: image.asset_url }
+      :javascript
+        $( document ).ready( function(){
+          $( '.images-grid img' ).each( function( el ){
+            $( el ).css( '-webkit-animation-play-state', 'paused' );
+          });
+        })
+    - if @images.respond_to?(:total_count)
+      .text-center
+        = paginate @images
