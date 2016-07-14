@@ -25,6 +25,17 @@ class Image < ActiveRecord::Base
     end
   end
   
+  def self.update_all_hashes!
+    Image.find_each do |image|
+      puts "Updating hash for #{image.id}"
+      begin
+        image.update_hash!
+      rescue Exception => ex
+        puts "  Failed to update hash for #{image.id}: #{ex}"
+      end
+    end
+  end
+  
   def self.import_from_url(url)
     image = Image.create
     image.extension_for_upload = File.extname(url)
