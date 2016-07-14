@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160629215108) do
+ActiveRecord::Schema.define(version: 20160714171124) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -26,7 +26,10 @@ ActiveRecord::Schema.define(version: 20160629215108) do
     t.text     "asset_original_filename"
     t.boolean  "asset_stored_privately"
     t.string   "asset_type"
+    t.string   "digest"
   end
+
+  add_index "images", ["digest"], name: "index_images_on_digest", using: :btree
 
   create_table "taggings", force: :cascade do |t|
     t.integer  "tag_id"

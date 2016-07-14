@@ -1,5 +1,6 @@
 require 'base64'
 require 'open-uri'
+require 'digest'
 
 class Image < ActiveRecord::Base
   acts_as_taggable
@@ -66,6 +67,12 @@ class Image < ActiveRecord::Base
   
   def tag_list_by_confidence
     tag_list_with_confidence.collect{ |t| t.tag.name }
+  end
+  
+  def update_hash!
+    data = open( asset_url ).read
+    digest = Digest::SHA256.hexdigest data
+    self.update_attributes( digest: digest )
   end
 
 

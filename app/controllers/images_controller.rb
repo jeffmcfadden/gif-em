@@ -47,14 +47,38 @@ class ImagesController < ApplicationController
   
   def create_from_url
     @image = Image.import_from_url(params[:image_url].strip)
-    redirect_to image_path(@image)
+    @image.update_hash!
+  
+    @duplicate = Image.where( "digest = ? AND id != ?", @image.digest, @image.id ).first
+  
+    if @duplicate.present?
+      flash[:notice] = "Image was a duplicate."
+      
+      @image.destroy
+      
+      redirect_to @duplicate
+    else
+      redirect_to image_path(@image)
+    end
   end
 
   def create
     @image = Image.new( image_params )
-
+    
     if @image.save
-      redirect_to image_path(@image, untagged: true)
+      @image.update_hash!
+    
+      @duplicate = Image.where( "digest = ? AND id != ?", @image.digest, @image.id ).first
+    
+      if @duplicate.present?
+        flash[:notice] = "Image was a duplicate."
+        
+        @image.destroy
+        
+        redirect_to @duplicate
+      else
+        redirect_to image_path(@image, untagged: true)
+      end
     else
       flash[:notice] = "Image failed to save."
       redirect_to images_path
