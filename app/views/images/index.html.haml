@@ -17,6 +17,13 @@
     - if @taggings.respond_to?(:total_count)
       .text-center
         = paginate @taggings
+
+- unless params[:q].present?
+  .row
+    .col-md-12.text-center
+      %h2
+        You Have #{Image.count} Amazing Gifs
+
 :coffeescript
   $( document ).ready ->
     $("input#q").focus()
